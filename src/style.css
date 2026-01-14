@@ -1,1 +1,162 @@
+.carousel{
+  width: 100%;
+  min-width: 100%; /* augmente la largeur max */
+  margin: 100px auto;
+  overflow: hidden;
+}
+
+.carousel::-webkit-scrollbar{
+    display: none;
+}
+
+@keyframes album {
+    from{
+        translate:0;
+    }
+    to{
+        translate: -100%;
+    }
+}
+.group{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: album 30s infinite linear;
+}
+
+.card{
+  width: 100vh;
+  padding: 1em;
+  border-radius: 20px;
+  text-align: center;
+  align-content: center;
+}
+
+img{
+  height: 50vh;
+  max-width: 600px;
+}
+
+
+.cs-container {
+  position: relative;
+  width: 400px;
+  height: 300px;
+}
+
+.cover {
+  position: relative;
+  height: 100%;
+  z-index: 2;
+}
+
+.cs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 270px;
+  height: 270px;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: transform 0.8s ease;
+}
+
+/* Animation au survol */
+.cs-container:hover .cs {
+  transform: translate(20%, -50%) rotate(360deg);
+}
+
+.cs {
+  animation: slideOut 1s ease-in-out alternate;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(20%, -50%);
+  }
+}
+
+
+
+
+/* Styles de base et du carrousel */
+.carousel{position:relative;max-width:100vh;margin:0 auto;overflow:hidden;border-radius:8px;background:#111}
+.slides{display:flex;flex-direction: row; transition:transform .5s ease;will-change:transform}
+.slide{min-width:100%;box-sizing:border-box}
+.slide img{width:100%;height:200px;object-fit:cover;display:block}
+
+.control{position:absolute;
+	top:50%;
+	transform:translateY(-50%);
+	background:rgba(0,0,0,.35);
+	border:0;color:var(--accent);
+	font-size:2rem;
+	padding:.25rem .6rem;
+	cursor:pointer;
+	z-index:10;
+	border-radius:6px
+}
+.control:hover{background:rgba(0,0,0,.6)}
+.control.prev{
+	left:10px}
+.control.next{right:10px}
+
+.dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px;z-index:10}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer;padding:0}
+.dots button.active{background:rgba(255,255,255,1);box-shadow:0 0 6px rgba(255,255,255,.2)}
+
+/* Responsive */
+@media (max-width:700px){
+  .slide img{height:100px}
+  .control{font-size:1.4rem}
+}
 @import "tailwindcss";
+
+@layer components {
+	#hero {
+		position: relative;
+	}
+
+	#hero nav {
+		position: relative;
+		z-index: 20;
+	}
+
+	.button {
+    border: 3px solid red;
+    padding: 0 10px;
+    background: none;
+    font-size: 15px;
+    position: relative;
+    border-radius: 80px;
+    overflow: hidden;
+    
+    --animation-origin-x: 50%;
+    --animation-origin-y: 50%;
+  }
+
+.button::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0px;
+    background-color: red;
+    opacity: 0;
+    transform: scale(0.2);
+    
+    border-radius: 500px;
+      transform-origin: var(--animation-origin-x) var(--animation-origin-y);
+    
+    transition: transform 1s ease, opacity 1s ease 0.3s;
+  }
+  
+.button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+}
