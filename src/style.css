@@ -1,1 +1,120 @@
+.carousel{
+  display: flex;
+  width: 100%;
+  min-width: 100%;
+  margin: 60px auto;
+  overflow: hidden;
+  gap: 1em;
+  background-color: black;
+  cursor: pointer;
+}
+
+.carousel::-webkit-scrollbar{
+    display: none;
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: album 30s linear infinite;
+  transform: translateX(0);
+}
+
+@keyframes album {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.paused {
+  animation-play-state: paused !important;
+}
+.cd_all {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: 0 100px;
+}
+
+.cover {
+  position: relative;
+  height: 100%;
+  max-width: 350px;
+  z-index: 2;
+}
+
+.cd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 35vh;
+  max-width: 270px;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: transform 0.8s ease;
+}
+
+/* Animation au survol */
+.cd_all:hover .cd {
+  transform: translate(20%, -50%) rotate(360deg);
+}
+
+
+
+
+/* Responsive */
+@media (max-width:700px){
+  .slide img{height:100px}
+  .control{font-size:1.4rem}
+}
 @import "tailwindcss";
+
+@layer components {
+	#hero {
+		position: relative;
+	}
+
+	#hero nav {
+		position: relative;
+		z-index: 20;
+	}
+
+	.button {
+    border: 3px solid red;
+    padding: 0 10px;
+    background: none;
+    font-size: 15px;
+    position: relative;
+    border-radius: 80px;
+    overflow: hidden;
+    
+    --animation-origin-x: 50%;
+    --animation-origin-y: 50%;
+  }
+
+.button::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0px;
+    background-color: red;
+    opacity: 0;
+    transform: scale(0.2);
+    
+    border-radius: 500px;
+      transform-origin: var(--animation-origin-x) var(--animation-origin-y);
+    
+    transition: transform 1s ease, opacity 1s ease 0.3s;
+  }
+  
+.button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+}
