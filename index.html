@@ -1,12 +1,95 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>artist-cover-crea-dev</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cover générative - Concert Grid</title>
+
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+
+  <section class="cover-section">
+    <div class="cover-layout">
+
+      <div class="cover-stage">
+        <canvas id="canvas" aria-label="Pochette générative"></canvas>
+      </div>
+
+      <aside class="panel" aria-label="Contrôles">
+        <h3>Contrôles</h3>
+
+        <div class="control">
+          <label for="density">Densité des danseurs</label>
+          <div class="control-row">
+            <input id="density" type="range" min="0" max="1" step="0.01" value="0.85">
+            <span id="densityVal" class="val">0.85</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="cols">Colonnes (moins = danseurs plus grands)</label>
+          <div class="control-row">
+            <input id="cols" type="range" min="3" max="12" step="1" value="6">
+            <span id="colsVal" class="val">6</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="size">Taille des danseurs</label>
+          <div class="control-row">
+            <input id="size" type="range" min="0.7" max="1.8" step="0.01" value="1.25">
+            <span id="sizeVal" class="val">1.25</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="stagger">Décalage des rangées (alterné)</label>
+          <div class="control-row">
+            <input id="stagger" type="range" min="0" max="1" step="0.01" value="0.5">
+            <span id="staggerVal" class="val">0.50</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="hue">Hue (coin haut-gauche)</label>
+          <div class="control-row">
+            <input id="hue" type="range" min="0" max="360" step="1" value="350">
+            <span id="hueVal" class="val">350</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="hueBR">Hue (coin bas-droit)</label>
+          <div class="control-row">
+            <input id="hueBR" type="range" min="0" max="360" step="1" value="210">
+            <span id="hueBRVal" class="val">210</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="sat">Saturation</label>
+          <div class="control-row">
+            <input id="sat" type="range" min="0" max="3" step="0.01" value="1.10">
+            <span id="satVal" class="val">1.10</span>
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="con">Contraste</label>
+          <div class="control-row">
+            <input id="con" type="range" min="0" max="3" step="0.01" value="1.10">
+            <span id="conVal" class="val">1.10</span>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button id="reset" type="button">Reset</button>
+          <button id="export" type="button">Export PNG</button>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+</body>
 </html>
