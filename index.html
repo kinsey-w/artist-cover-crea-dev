@@ -9,19 +9,29 @@
   <body class="bg-black text-white">
     <header class="bg-[url('/images/the_weeknd.jpg')] bg-cover bg-center h-screen">
       <nav class="flex justify-between items-center px-8 py-4">
-        <h1 id="logo">THE WEEKND</h1>
-        <ul class="flex px-8 gap-4">
-          <li><a href="#">CUSTOM</a></li>
-          <li><a href="#">CATALOGUE</a></li>
+        <h1 id="logo" class="text-2xl sm:text-4xl">THE WEEKND</h1>
+        <ul class="flex px-8 gap-8">
+          <li><a href="#" class="text-2xl">CUSTOM</a></li>
+          <li><a href="#" class="text-2xl">CATALOGUE</a></li>
         </ul>
       </nav>
-      <div class="flex flex-col justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center">
-        <h2 class="text-8xl font-bold top-1/2 left-1/2">NOUVEL ALBUM</h2>
-        <p class="top-1/2 left-1/2">bientôt disponible</p>
-        <button class="button" class="py-4 text-l relative rounded-2xl border-black">PRECOMMANDER</button>
+      <div class="flex flex-col justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center gap-4 mt-20">
+        <h2 class="new sm:text-9xl md:flex tracking-[5px] top-1/2 left-1/2 text-7xl font-bold gap-4">
+          <span class="word inline-block">NOUVEL</span>
+          <span class="word inline-block">ALBUM</span>
+        </h2>
+        <p>BIENTOT DISPONIBLE</p>
+        <button class="group relative inline-flex items-center justify-center overflow-hidden py-4 px-8 mt-12 text-2xl rounded-3xl border-4 border-white bg-transparent box-border">
+          <span class="precom relative z-10 tracking-[10px]">PRECOMMANDER</span>
+          <span class="precom absolute inset-0 bg-red-800 opacity-0 scale-[0.2] rounded-2xl transition-transform transition-opacity duration-700 ease-out group-hover:opacity-100 group-hover:scale-100"></span>
+        </button>
+        <div class="flex flex-col justify-center items-center mt-8">
+          <div class="arrow arrow-first"></div>
+          <div class="arrow arrow-second"></div>
+        </div>
       </div>
     </header>
-
+    
     <section class="m-8">
       <p>szgrdg</p>
     </section>
@@ -29,7 +39,7 @@
     <section>
       <h2 class="text-center text-5xl">ANCIENS CD</h2>
        <div class="carousel">
-        <div class="group">
+        <div class="groupe">
           <div class="text-center">
             <div class="cd_all">
               <img src="/images/Afterhours.png" class="cover">
@@ -79,7 +89,7 @@
             <p>11,99€</p>
           </div>
         </div>
-        <div aria-hidden class="group">
+        <div aria-hidden class="groupe">
           <div class="text-center">
             <div class="cd_all">
               <img src="/images/Afterhours.png" class="cover">
@@ -133,8 +143,8 @@
     </section>
    
 
-    <footer class="flex justify-between items-center px-8 py-2 bg-red-950">
-      <div class="flex justify-between items-center px-8 py-4 gap-4">
+    <footer class="lg:flex justify-between items-center text-center  px-8 py-2 bg-red-950 w-full">
+      <div class="lg:flex justify-between items-center text-center px-8 py-4 gap-4">
         <p>Help & Support</p>
         <p>Terms</p>
         <p>Privacy</p>
@@ -147,5 +157,6 @@
       </div>
     </footer>
     <script type="module" src="/src/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   </body>
 </html>
