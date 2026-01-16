@@ -1,1 +1,168 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "DrukCond";
+  font-style: normal;
+  font-weight:  400;
+  font-display: swap;
+  src: url("/fonts/DrukCond-Super-Trial.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Nimbus";
+  font-style: normal;
+  font-weight:  400;
+  font-display: swap;
+  src: url("/fonts/NumbusSanL.woff") format("woff");
+}
+
+h1, h2, a{
+  font-family: "DrukCond", sans-serif !important;
+  letter-spacing: 2px;
+}
+
+p{
+  font-family: "Nimbus", sans-serif !important;
+}
+
+/*--------------------- header ---------------------*/
+
+.precom{
+  font-family: "Nimbus", sans-serif !important;
+  letter-spacing: 3px;
+}
+
+.arrow{
+  opacity: 0;
+  position: relative;
+}
+
+.arrow-first{
+  animation: arrow-movement 2s ease-in-out infinite;
+}
+.arrow-second{
+  animation: arrow-movement 2s 1s ease-in-out infinite;
+}
+
+.arrow::before, .arrow::after{
+  background: #ffffff;
+  content: '';
+  display: block;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+}
+
+.arrow::before{
+  transform: rotate(45deg) translateX(-23%);
+  transform-origin: top left;
+}
+
+.arrow::after{
+  transform: rotate(-45deg) translateX(23%);
+  transform-origin: top right;
+}
+
+@keyframes arrow-movement{
+  0%{
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  70%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/*---------------------- section 3 ----------------------*/
+.carousel{
+  display: flex;
+  width: 100%;
+  min-width: 100%;
+  margin: 60px 0;
+  overflow: hidden;
+  gap: 1em;
+  background-color: black;
+  cursor: pointer;
+}
+
+.carousel::-webkit-scrollbar{
+    display: none;
+}
+
+.groupe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: album 30s linear infinite;
+  transform: translateX(0);
+}
+
+@keyframes album {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.paused {
+  animation-play-state: paused !important;
+}
+
+.cd_all {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  margin: 0 100px;
+}
+
+.cover {
+  position: relative;
+  height: 100%;
+  max-width: 350px;
+  z-index: 2;
+}
+
+.cd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 35vh;
+  max-width: 270px;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: transform 0.8s ease;
+}
+
+.cd_all:hover .cd {
+  transform: translate(20%, -50%) rotate(360deg);
+}
+
+
+
+
+/* Responsive */
+@media (max-width:700px){
+  .slide img{height:100px}
+  .control{font-size:1.4rem}
+}
+
+@layer components {
+	#hero {
+		position: relative;
+	}
+
+	#hero nav {
+		position: relative;
+		z-index: 20;
+	}
+}

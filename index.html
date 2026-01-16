@@ -1,14 +1,37 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cover générative - Concert Grid</title>
-  <script type="module" src="/src/main.js"></script>
-</head>
-
-<body class="bg-black text-white">
-  <section class="px-4 py-12 flex justify-center">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css">
+    <title>COVER ALBUM THE WEEKND</title>
+  </head>
+  <body class="bg-black text-white">
+    <header class="bg-[url('/images/the_weeknd.jpg')] bg-cover bg-center h-screen">
+      <nav class="flex justify-between items-center px-8 py-4">
+        <h1 id="logo" class="text-2xl sm:text-4xl">THE WEEKND</h1>
+        <ul class="flex px-8 gap-8">
+          <li><a href="#" class="text-2xl">CUSTOM</a></li>
+          <li><a href="#" class="text-2xl">CATALOGUE</a></li>
+        </ul>
+      </nav>
+      <div class="flex flex-col justify-center items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-center gap-4 mt-20">
+        <h2 class="new sm:text-9xl md:flex tracking-[5px] top-1/2 left-1/2 text-7xl font-bold gap-4">
+          <span class="word inline-block">NOUVEL</span>
+          <span class="word inline-block">ALBUM</span>
+        </h2>
+        <p>BIENTOT DISPONIBLE</p>
+        <button class="group relative inline-flex items-center justify-center overflow-hidden py-4 px-8 mt-12 text-2xl rounded-3xl border-4 border-white bg-transparent box-border">
+          <span class="precom relative z-10 tracking-[10px]">PRECOMMANDER</span>
+          <span class="precom absolute inset-0 bg-red-800 opacity-0 scale-[0.2] rounded-2xl transition-transform transition-opacity duration-700 ease-out group-hover:opacity-100 group-hover:scale-100"></span>
+        </button>
+        <div class="flex flex-col justify-center items-center mt-8">
+          <div class="arrow arrow-first"></div>
+          <div class="arrow arrow-second"></div>
+        </div>
+      </div>
+    </header>
+    
+  <section class="m-8 px-4 py-12 flex justify-center">
     <div class="w-full max-w-275 flex items-center justify-center gap-6 max-[860px]:flex-col">
 
       <!-- canvas -->
@@ -114,5 +137,128 @@
 
     </div>
   </section>
-</body>
+
+    <section>
+      <h2 class="text-center text-5xl">ANCIENS CD</h2>
+       <div class="carousel">
+        <div class="groupe">
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Afterhours.png" class="cover">
+              <img src="/images/afterhours_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">AFTER HOURS CD</h3>
+            <p>11,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Beauty.png" class="cover">
+              <img src="/images/beauty_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">BEAUTY BEHIND THE MINDNESS</h3>
+            <p>13,99</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Dawn.png" class="cover">
+              <img src="/images/dawn_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">DAWN FM</h3>
+            <p>13,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Mydear.png" class="cover">
+              <img src="/images/mydear_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">MY DEAR MELANCHOLY CD</h3>
+            <p>7,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Starboy.png" class="cover">
+              <img src="/images/starboy_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">STARBOY CD</h3>
+            <p>13,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/TheHighlight.png" class="cover">
+              <img src="/images/thehighlight_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">THE HIGHLIGHT CD</h3>
+            <p>11,99€</p>
+          </div>
+        </div>
+        <div aria-hidden class="groupe">
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Afterhours.png" class="cover">
+              <img src="/images/afterhours_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">AFTER HOURS CD</h3>
+            <p>11,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Beauty.png" class="cover">
+              <img src="/images/beauty_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">BEAUTY BEHIND THE MINDNESS</h3>
+            <p>13,99</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Dawn.png" class="cover">
+              <img src="/images/dawn_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">DAWN FM</h3>
+            <p>13,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Mydear.png" class="cover">
+              <img src="/images/mydear_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">MY DEAR MELANCHOLY CD</h3>
+            <p>7,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/Starboy.png" class="cover">
+              <img src="/images/starboy_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">STARBOY CD</h3>
+            <p>13,99€</p>
+          </div>
+          <div class="text-center">
+            <div class="cd_all">
+              <img src="/images/TheHighlight.png" class="cover">
+              <img src="/images/thehighlight_cd.png" class="cd">
+            </div>
+            <h3 class="my-4">THE HIGHLIGHT CD</h3>
+            <p>11,99€</p>
+          </div>
+        </div>
+      </div>
+    </section>
+   
+
+    <footer class="lg:flex justify-between items-center text-center  px-8 py-2 bg-red-950 w-full">
+      <div class="lg:flex justify-between items-center text-center px-8 py-4 gap-4">
+        <p>Help & Support</p>
+        <p>Terms</p>
+        <p>Privacy</p>
+        <p>Do not sell my personal information</p>
+        <p>Cookie Choices</p>
+      </div>
+
+      <div>
+        <p>Réseaux sociaux</p>
+      </div>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  </body>
 </html>
