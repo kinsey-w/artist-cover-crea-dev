@@ -1,7 +1,6 @@
 import "./style.css";
 // import { Pane } from "tweakpane";
 
-// setup canvas
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -10,24 +9,19 @@ const size = Math.floor(canvas.clientWidth * dpr);
 canvas.width = size;
 canvas.height = size;
 
-// paramètres + valeurs default
 const PARAMS = {
-  // motif danseurs
   density: 0.85,
   cols: 6,
   dancerSize: 1.25,
   stagger: 0.5,
 
-  // couleurs fond
-  hueTL: 350,   // top-left
-  hueBR: 210,   // bottom-right
+  hueTL: 350,
+  hueBR: 210,
 
-  // filtre image
   saturation: 1.1,
   contrast: 1.1,
 };
 
-// images
 const artistImg = new Image();
 artistImg.src = "/The-Weeknd2-nobg.png";
 
@@ -45,7 +39,6 @@ let readyCount = 0;
   };
 });
 
-// UI 
 function $(id) {
   return document.getElementById(id);
 }
@@ -60,7 +53,6 @@ function bindRange(inputId, valueId, key, decimals = 2) {
   input.addEventListener("input", (e) => {
     PARAMS[key] = +e.target.value;
 
-    // mise à jour du label à droite
     if (valueId) {
       const v = PARAMS[key];
       setText(valueId, decimals === 0 ? String(Math.round(v)) : v.toFixed(decimals));
@@ -70,7 +62,6 @@ function bindRange(inputId, valueId, key, decimals = 2) {
   });
 }
 
-// sliders
 bindRange("density", "densityVal", "density", 2);
 bindRange("cols", "colsVal", "cols", 0);
 bindRange("size", "sizeVal", "dancerSize", 2);
@@ -80,7 +71,6 @@ bindRange("hueBR", "hueBRVal", "hueBR", 0);
 bindRange("sat", "satVal", "saturation", 2);
 bindRange("con", "conVal", "contrast", 2);
 
-// reset
 $("reset").addEventListener("click", () => {
   PARAMS.density = 0.85;
   PARAMS.cols = 6;
@@ -103,7 +93,6 @@ $("reset").addEventListener("click", () => {
   draw();
 });
 
-// export
 $("export").addEventListener("click", () => {
   const a = document.createElement("a");
   a.download = "album-cover.png";
@@ -111,13 +100,11 @@ $("export").addEventListener("click", () => {
   a.click();
 });
 
-// dessin
 function draw() {
   if (readyCount !== 3) return;
 
   ctx.filter = `saturate(${PARAMS.saturation}) contrast(${PARAMS.contrast})`;
 
-  // fond gradient
   const g = ctx.createLinearGradient(0, 0, size, size);
   g.addColorStop(0, `hsl(${PARAMS.hueTL} 70% 45%)`);
   g.addColorStop(1, `hsl(${PARAMS.hueBR} 60% 30%)`);
@@ -133,7 +120,6 @@ function draw() {
   ctx.fillStyle = vg;
   ctx.fillRect(0, 0, size, size);
 
-  // grille danseurs
   const cols = PARAMS.cols;
   const cell = size / cols;
   const rows = Math.ceil(size / cell);
@@ -173,7 +159,7 @@ function draw() {
   }
   ctx.restore();
 
-  // titre
+
   {
     const w = size * 0.78;
     const h = w * (titleImg.height / titleImg.width);
@@ -182,7 +168,6 @@ function draw() {
     ctx.drawImage(titleImg, x, y, w, h);
   }
 
-  // image artiste
   {
     const scale = 1.05;
     const w = size * scale;
@@ -192,25 +177,20 @@ function draw() {
     ctx.drawImage(artistImg, x, y, w, h);
   }
 
-  // reset filtre
   ctx.filter = "none";
 
-  // bordure
   ctx.strokeStyle = "rgba(255,255,255,.12)";
   ctx.lineWidth = Math.max(1, dpr);
   ctx.strokeRect(0, 0, size, size);
 }
 
-
-
-// animations site
 const covers = document.querySelectorAll('.cover');
 
 covers.forEach(cover => {
   cover.addEventListener('click', () => {
-    const groups = document.querySelectorAll('.groupe'); // tous les groupes
+    const groups = document.querySelectorAll('.groupe');
     groups.forEach(group => {
-      group.classList.toggle('paused'); // on met en pause ou on reprend
+      group.classList.toggle('paused');
     });
   });
 });
