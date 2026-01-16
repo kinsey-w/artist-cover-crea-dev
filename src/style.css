@@ -35,6 +35,7 @@ h3, p{
 .arrow{
   opacity: 0;
   position: relative;
+  right: 10;
 }
 
 .arrow-first{
