@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @font-face {
   font-family: "DrukCond";
   font-style: normal;
@@ -153,7 +155,6 @@ p{
   .slide img{height:100px}
   .control{font-size:1.4rem}
 }
-@import "tailwindcss";
 
 @layer components {
 	#hero {
