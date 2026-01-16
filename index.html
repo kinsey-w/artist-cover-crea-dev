@@ -4,88 +4,111 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cover générative - Concert Grid</title>
-
   <script type="module" src="/src/main.js"></script>
 </head>
-<body>
 
-  <section class="cover-section">
-    <div class="cover-layout">
+<body class="bg-black text-white">
+  <section class="px-4 py-12 flex justify-center">
+    <div class="w-full max-w-275 flex items-center justify-center gap-6 max-[860px]:flex-col">
 
-      <div class="cover-stage">
-        <canvas id="canvas" aria-label="Pochette générative"></canvas>
+      <!-- canvas -->
+      <div class="flex items-center justify-center">
+        <canvas
+          id="canvas"
+          class="w-[min(62vmin,640px)] aspect-square rounded-[18px] bg-black
+                 shadow-[0_30px_90px_rgba(0,0,0,0.7),inset_0_0_0_1px_rgba(255,255,255,0.07)]"
+        ></canvas>
       </div>
 
-      <aside class="panel" aria-label="Contrôles">
-        <h3>Contrôles</h3>
+      <!-- panel controle -->
+      <aside
+        class="w-70 p-4 rounded-2xl border border-white/10 bg-white/5
+               backdrop-blur-md max-[860px]:w-[min(520px,100%)]"
+      >
+        <h3 class="text-lg font-semibold mb-2">Contrôles</h3>
 
-        <div class="control">
-          <label for="density">Densité des danseurs</label>
-          <div class="control-row">
-            <input id="density" type="range" min="0" max="1" step="0.01" value="0.85">
-            <span id="densityVal" class="val">0.85</span>
+        <!-- Helper for control blocks -->
+        <div class="mt-3">
+          <label for="density" class="block text-xs text-white/80">Densité des danseurs</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="density" type="range" min="0" max="1" step="0.01" value="0.85" class="w-full accent-red-800">
+            <span id="densityVal" class="text-xs text-white/70 text-right">0.85</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="cols">Colonnes (moins = danseurs plus grands)</label>
-          <div class="control-row">
-            <input id="cols" type="range" min="3" max="12" step="1" value="6">
-            <span id="colsVal" class="val">6</span>
+        <div class="mt-3">
+          <label for="cols" class="block text-xs text-white/80">Colonnes (moins = danseurs plus grands)</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="cols" type="range" min="3" max="12" step="1" value="6" class="w-full accent-red-800">
+            <span id="colsVal" class="text-xs text-white/70 text-right">6</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="size">Taille des danseurs</label>
-          <div class="control-row">
-            <input id="size" type="range" min="0.7" max="1.8" step="0.01" value="1.25">
-            <span id="sizeVal" class="val">1.25</span>
+        <div class="mt-3">
+          <label for="size" class="block text-xs text-white/80">Taille des danseurs</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="size" type="range" min="0.7" max="1.8" step="0.01" value="1.25" class="w-full accent-red-800">
+            <span id="sizeVal" class="text-xs text-white/70 text-right">1.25</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="stagger">Décalage des rangées (alterné)</label>
-          <div class="control-row">
-            <input id="stagger" type="range" min="0" max="1" step="0.01" value="0.5">
-            <span id="staggerVal" class="val">0.50</span>
+        <div class="mt-3">
+          <label for="stagger" class="block text-xs text-white/80">Décalage des rangées (alterné)</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="stagger" type="range" min="0" max="1" step="0.01" value="0.5" class="w-full accent-red-800">
+            <span id="staggerVal" class="text-xs text-white/70 text-right">0.50</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="hue">Hue (coin haut-gauche)</label>
-          <div class="control-row">
-            <input id="hue" type="range" min="0" max="360" step="1" value="350">
-            <span id="hueVal" class="val">350</span>
+        <div class="mt-3">
+          <label for="hue" class="block text-xs text-white/80">Hue (coin haut-gauche)</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="hue" type="range" min="0" max="360" step="1" value="350" class="w-full accent-red-800">
+            <span id="hueVal" class="text-xs text-white/70 text-right">350</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="hueBR">Hue (coin bas-droit)</label>
-          <div class="control-row">
-            <input id="hueBR" type="range" min="0" max="360" step="1" value="210">
-            <span id="hueBRVal" class="val">210</span>
+        <div class="mt-3">
+          <label for="hueBR" class="block text-xs text-white/80">Hue (coin bas-droit)</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="hueBR" type="range" min="0" max="360" step="1" value="210" class="w-full accent-red-800">
+            <span id="hueBRVal" class="text-xs text-white/70 text-right">210</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="sat">Saturation</label>
-          <div class="control-row">
-            <input id="sat" type="range" min="0" max="3" step="0.01" value="1.10">
-            <span id="satVal" class="val">1.10</span>
+        <div class="mt-3">
+          <label for="sat" class="block text-xs text-white/80">Saturation</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="sat" type="range" min="0" max="3" step="0.01" value="1.10" class="w-full accent-red-800">
+            <span id="satVal" class="text-xs text-white/70 text-right">1.10</span>
           </div>
         </div>
 
-        <div class="control">
-          <label for="con">Contraste</label>
-          <div class="control-row">
-            <input id="con" type="range" min="0" max="3" step="0.01" value="1.10">
-            <span id="conVal" class="val">1.10</span>
+        <div class="mt-3">
+          <label for="con" class="block text-xs text-white/80">Contraste</label>
+          <div class="mt-1 grid grid-cols-[1fr_56px] gap-2 items-center">
+            <input id="con" type="range" min="0" max="3" step="0.01" value="1.10" class="w-full accent-red-800">
+            <span id="conVal" class="text-xs text-white/70 text-right">1.10</span>
           </div>
         </div>
 
-        <div class="buttons">
-          <button id="reset" type="button">Reset</button>
-          <button id="export" type="button">Export PNG</button>
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <button
+            id="reset"
+            type="button"
+            class="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm
+                   hover:bg-white/15 transition"
+          >
+            Reset
+          </button>
+          <button
+            id="export"
+            type="button"
+            class="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm
+                   hover:bg-white/15 transition"
+          >
+            Export PNG
+          </button>
         </div>
       </aside>
 

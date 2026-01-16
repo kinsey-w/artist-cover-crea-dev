@@ -1,11 +1,33 @@
 import "./style.css";
 // import { Pane } from "tweakpane";
 
-// Canvas
+// setup canvas
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-// Chargement des images
+const dpr = window.devicePixelRatio || 1;
+const size = Math.floor(canvas.clientWidth * dpr);
+canvas.width = size;
+canvas.height = size;
+
+// paramètres + valeurs default
+const PARAMS = {
+  // motif danseurs
+  density: 0.85,
+  cols: 6,
+  dancerSize: 1.25,
+  stagger: 0.5,
+
+  // couleurs fond
+  hueTL: 350,   // top-left
+  hueBR: 210,   // bottom-right
+
+  // filtre image
+  saturation: 1.1,
+  contrast: 1.1,
+};
+
+// images
 const artistImg = new Image();
 artistImg.src = "/The-Weeknd2-nobg.png";
 
@@ -13,91 +35,95 @@ const dancerImg = new Image();
 dancerImg.src = "/dancer-nobg.png";
 
 const titleImg = new Image();
-titleImg.src = "/The_Weeknd_logo.png";
+titleImg.src = "/The-Weeknd-logo.png";
 
-// Paramètres (et valeurs par défaut)
-const DEFAULTS = {
-  // Motif danseurs
-  density: 0.85,     // probabilité d’afficher un danseur dans une cellule (0..1)
-  cols: 6,           // nombre de colonnes de la grille (moins = plus grand)
-  dancerSize: 1.25,  // multiplicateur de taille des PNG danseurs
-  stagger: 0.5,      // décalage d’une rangée sur deux (0..1) -> 0.5 = demi-cellule
+let readyCount = 0;
+[artistImg, dancerImg, titleImg].forEach((img) => {
+  img.onload = () => {
+    readyCount += 1;
+    if (readyCount === 3) draw();
+  };
+});
 
-  // Couleurs fond
-  hue: 350,          // hue coin haut-gauche
-  hueBR: 210,        // hue coin bas-droit
-
-  // Filtre global
-  saturation: 1.10,
-  contrast: 1.10,
-};
-
-// L’objet utilisé par le rendu
-const P = { ...DEFAULTS };
-
-// helper pour récupérer un élément
-const $ = (id) => document.getElementById(id);
-
-// DPR : rendre le canvas net (retina)
-function resizeCanvas() {
-  const dpr = window.devicePixelRatio || 1;
-
-  // canvas.clientWidth = taille CSS réelle du canvas
-  const size = Math.floor(canvas.clientWidth * dpr);
-
-  // On évite de réassigner si ce n’est pas nécessaire
-  if (canvas.width !== size || canvas.height !== size) {
-    canvas.width = size;
-    canvas.height = size;
-  }
-  return size;
+// UI 
+function $(id) {
+  return document.getElementById(id);
 }
 
-// UI : mise à jour des labels (valeurs à droite des sliders)
-function updateLabels() {
-  $("densityVal").textContent = (+P.density).toFixed(2);
-  $("colsVal").textContent = String(P.cols);
-  $("sizeVal").textContent = (+P.dancerSize).toFixed(2);
-  $("staggerVal").textContent = (+P.stagger).toFixed(2);
-
-  $("hueVal").textContent = String(Math.round(P.hue));
-  $("hueBRVal").textContent = String(Math.round(P.hueBR));
-
-  $("satVal").textContent = (+P.saturation).toFixed(2);
-  $("conVal").textContent = (+P.contrast).toFixed(2);
+function setText(id, value) {
+  $(id).textContent = value;
 }
 
-// Remet les sliders à la valeur de P (utile pour reset)
-function setUIFromParams() {
-  $("density").value = P.density;
-  $("cols").value = P.cols;
-  $("size").value = P.dancerSize;
-  $("stagger").value = P.stagger;
+function bindRange(inputId, valueId, key, decimals = 2) {
+  const input = $(inputId);
 
-  $("hue").value = P.hue;
-  $("hueBR").value = P.hueBR;
+  input.addEventListener("input", (e) => {
+    PARAMS[key] = +e.target.value;
 
-  $("sat").value = P.saturation;
-  $("con").value = P.contrast;
+    // mise à jour du label à droite
+    if (valueId) {
+      const v = PARAMS[key];
+      setText(valueId, decimals === 0 ? String(Math.round(v)) : v.toFixed(decimals));
+    }
 
-  updateLabels();
+    draw();
+  });
 }
 
-// Dessin : fond (dégradé + vignette)
-function drawBackground(size) {
-  // Dégradé diagonal (haut-gauche -> bas-droit)
+// sliders
+bindRange("density", "densityVal", "density", 2);
+bindRange("cols", "colsVal", "cols", 0);
+bindRange("size", "sizeVal", "dancerSize", 2);
+bindRange("stagger", "staggerVal", "stagger", 2);
+bindRange("hue", "hueVal", "hueTL", 0);
+bindRange("hueBR", "hueBRVal", "hueBR", 0);
+bindRange("sat", "satVal", "saturation", 2);
+bindRange("con", "conVal", "contrast", 2);
+
+// reset
+$("reset").addEventListener("click", () => {
+  PARAMS.density = 0.85;
+  PARAMS.cols = 6;
+  PARAMS.dancerSize = 1.25;
+  PARAMS.stagger = 0.5;
+  PARAMS.hueTL = 350;
+  PARAMS.hueBR = 210;
+  PARAMS.saturation = 1.1;
+  PARAMS.contrast = 1.1;
+
+  $("density").value = PARAMS.density; setText("densityVal", PARAMS.density.toFixed(2));
+  $("cols").value = PARAMS.cols;       setText("colsVal", String(PARAMS.cols));
+  $("size").value = PARAMS.dancerSize; setText("sizeVal", PARAMS.dancerSize.toFixed(2));
+  $("stagger").value = PARAMS.stagger; setText("staggerVal", PARAMS.stagger.toFixed(2));
+  $("hue").value = PARAMS.hueTL;       setText("hueVal", String(PARAMS.hueTL));
+  $("hueBR").value = PARAMS.hueBR;     setText("hueBRVal", String(PARAMS.hueBR));
+  $("sat").value = PARAMS.saturation;  setText("satVal", PARAMS.saturation.toFixed(2));
+  $("con").value = PARAMS.contrast;    setText("conVal", PARAMS.contrast.toFixed(2));
+
+  draw();
+});
+
+// export
+$("export").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.download = "album-cover.png";
+  a.href = canvas.toDataURL("image/png");
+  a.click();
+});
+
+// dessin
+function draw() {
+  if (readyCount !== 3) return;
+
+  ctx.filter = `saturate(${PARAMS.saturation}) contrast(${PARAMS.contrast})`;
+
+  // fond gradient
   const g = ctx.createLinearGradient(0, 0, size, size);
-
-  // Coin haut-gauche (contrôlé par hue)
-  g.addColorStop(0, `hsl(${P.hue} 70% 45%)`);
-
-  // Coin bas-droit (contrôlé par hueBR)
-  g.addColorStop(1, `hsl(${P.hueBR} 60% 30%)`);
-
+  g.addColorStop(0, `hsl(${PARAMS.hueTL} 70% 45%)`);
+  g.addColorStop(1, `hsl(${PARAMS.hueBR} 60% 30%)`);
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, size, size);
 
-  // Vignette : assombrit les bords pour un look plus “ciné”
   const vg = ctx.createRadialGradient(
     size / 2, size / 2, size * 0.2,
     size / 2, size / 2, size * 0.75
@@ -106,15 +132,12 @@ function drawBackground(size) {
   vg.addColorStop(1, "rgba(0,0,0,0.6)");
   ctx.fillStyle = vg;
   ctx.fillRect(0, 0, size, size);
-}
 
-// Dessin : motif des danseurs (grille alternée)
-function drawDancers(size) {
-  const cols = P.cols;
-  const cell = size / cols;          // taille d’une cellule
+  // grille danseurs
+  const cols = PARAMS.cols;
+  const cell = size / cols;
   const rows = Math.ceil(size / cell);
 
-  // Pour “concert vibe” : on commence plus bas dans l’image
   const stageStart = size * 0.40;
 
   ctx.save();
@@ -122,28 +145,20 @@ function drawDancers(size) {
 
   for (let row = 0; row < rows; row++) {
     const y = row * cell;
-
-    // On ignore les rangées au-dessus de stageStart
     if (y < stageStart) continue;
 
-    // Décalage 1 rangée sur 2 (stagger)
-    const offset = (row % 2 === 0) ? 0 : (P.stagger * cell);
+    const offset = (row % 2 === 0) ? 0 : (PARAMS.stagger * cell);
 
     for (let col = 0; col < cols + 1; col++) {
-      // “density” = probabilité d’afficher un danseur
-      if (Math.random() > P.density) continue;
+      if (Math.random() > PARAMS.density) continue;
 
       const x = col * cell + offset;
+      const s = cell * PARAMS.dancerSize;
 
-      // Taille du danseur (en fonction de la cellule)
-      const s = cell * P.dancerSize;
-
-      // Petit bruit (jitter) pour casser l’effet trop parfait
       const jx = (Math.random() * 2 - 1) * cell * 0.08;
       const jy = (Math.random() * 2 - 1) * cell * 0.08;
 
-      // Profondeur : plus on est bas, plus c’est grand et visible
-      const depth = (y - stageStart) / (size - stageStart); // 0..1
+      const depth = (y - stageStart) / (size - stageStart);
       const depthScale = 0.85 + depth * 0.35;
       ctx.globalAlpha = 0.20 + depth * 0.55;
 
@@ -156,103 +171,32 @@ function drawDancers(size) {
       );
     }
   }
-
   ctx.restore();
-}
 
-// Dessin : titre (PNG) en haut-centre
-function drawTitle(size) {
-  const w = size * 0.78;
-  const h = w * (titleImg.height / titleImg.width);
-  const x = size / 2 - w / 2;
-  const y = size * 0.06;
-  ctx.drawImage(titleImg, x, y, w, h);
-}
+  // titre
+  {
+    const w = size * 0.78;
+    const h = w * (titleImg.height / titleImg.width);
+    const x = size / 2 - w / 2;
+    const y = size * 0.03 - h * 0.35;
+    ctx.drawImage(titleImg, x, y, w, h);
+  }
 
-// Dessin : artiste (PNG) en bas, devant
-function drawArtist(size) {
-  // “Grand” artiste, ancré en bas
-  const scale = 1.05;
-  const w = size * scale;
-  const h = w * (artistImg.height / artistImg.width);
-  const x = size / 2 - w / 2;
+  // image artiste
+  {
+    const scale = 1.05;
+    const w = size * scale;
+    const h = w * (artistImg.height / artistImg.width);
+    const x = size / 2 - w / 2;
+    const y = size - h + size * 0.06;
+    ctx.drawImage(artistImg, x, y, w, h);
+  }
 
-  // On le descend un peu pour “déborder” et paraître plus massif
-  const y = size - h + size * 0.06;
-
-  ctx.drawImage(artistImg, x, y, w, h);
-}
-
-// Rendu principal
-function draw() {
-  // On s’assure que les images sont prêtes
-  if (!artistImg.complete || !dancerImg.complete || !titleImg.complete) return;
-
-  const size = resizeCanvas();
-  ctx.clearRect(0, 0, size, size);
-
-  // Filtre global (simple) : saturation + contraste
-  // Si tu veux filtrer seulement le fond + danseurs : mets filter,
-  // dessine fond + danseurs, puis ctx.filter = "none" avant titre/artiste.
-  ctx.filter = `saturate(${P.saturation}) contrast(${P.contrast})`;
-
-  drawBackground(size);
-  drawDancers(size);
-  drawTitle(size);
-  drawArtist(size);
-
+  // reset filtre
   ctx.filter = "none";
 
-  // Bordure fine
+  // bordure
   ctx.strokeStyle = "rgba(255,255,255,.12)";
-  ctx.lineWidth = Math.max(1, window.devicePixelRatio || 1);
+  ctx.lineWidth = Math.max(1, dpr);
   ctx.strokeRect(0, 0, size, size);
 }
-
-// Wiring UI : slider -> update param -> redraw
-function bindRange(id, key) {
-  $(id).addEventListener("input", (e) => {
-    P[key] = +e.target.value;
-    updateLabels();
-    draw();
-  });
-}
-
-bindRange("density", "density");
-bindRange("cols", "cols");
-bindRange("size", "dancerSize");
-bindRange("stagger", "stagger");
-bindRange("hue", "hue");
-bindRange("hueBR", "hueBR");
-bindRange("sat", "saturation");
-bindRange("con", "contrast");
-
-// Reset : on remet les valeurs par défaut
-$("reset").addEventListener("click", () => {
-  Object.assign(P, DEFAULTS);
-  setUIFromParams();
-  draw();
-});
-
-// Export PNG : récupère le contenu du canvas en image
-$("export").addEventListener("click", () => {
-  const a = document.createElement("a");
-  a.download = "album-cover.png";
-  a.href = canvas.toDataURL("image/png");
-  a.click();
-});
-
-// Redraw si la fenêtre change de taille
-window.addEventListener("resize", draw);
-
-// Attendre le chargement complet des images avant le 1er rendu
-let loaded = 0;
-[artistImg, dancerImg, titleImg].forEach((img) => {
-  img.addEventListener("load", () => {
-    loaded++;
-    if (loaded === 3) {
-      setUIFromParams();
-      draw();
-    }
-  });
-});
